@@ -1,6 +1,6 @@
 cd "$(dirname "$0")"
 
-brightness=$(python3 get-nice-brightness.py3 $(cat /sys/class/backlight/intel_backlight/brightness))
+brightness=$(python3 get-nice-brightness.py $(cat /sys/class/backlight/intel_backlight/brightness) $(cat /sys/class/backlight/intel_backlight/max_brightness))
 
 # echo $brightness
 
