@@ -2,13 +2,11 @@ import os
 import cv2
 import numpy as np
 import time
+
+from state_dir import get_state_file
 from .exceptions import CameraReadError
 
-webcam_config_path = os.path.join("config", "webcam")
-webcam_config_last_path = os.path.join("config", "webcam", "last")
-
-if not os.path.exists(webcam_config_path):
-    os.makedirs(webcam_config_path)
+webcam_config_last_path = get_state_file("last")
 
 def get_webcam_multiplier():
     webcam = cv2.VideoCapture(0)

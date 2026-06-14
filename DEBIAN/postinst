@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+if [ "$1" = "configure" ]; then
+    mkdir -p /var/lib/day-brightness
+    chmod 755 /var/lib/day-brightness
+    
+    systemctl daemon-reload
+    
+    for service in day-brightness.timer day-brightness.service; do
+        if [ -f "/lib/systemd/system/$service" ]; then
+            systemctl enable "$service"
+            systemctl start "$service"
+        fi
+    done
+fi
+#DEBHELPER#

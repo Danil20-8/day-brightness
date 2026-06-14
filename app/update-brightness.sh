@@ -22,6 +22,16 @@ if [ -d /sys/class/backlight ] && [ "$(cat /sys/class/backlight/*/brightness 2>/
     exit 0
 fi
 
-# 4. Если все проверки пройдены, запускаем основной скрипт
+# 4. Определяем STATE_DIRECTORY если не задан
+if [ -z "$STATE_DIRECTORY" ]; then
+    # Для разработки/тестов - используем локальную папку
+    export STATE_DIRECTORY="./config"
+    echo "STATE_DIRECTORY not set, using: $STATE_DIRECTORY"
+fi
+
+# Создаём директорию если её нет
+mkdir -p "$STATE_DIRECTORY"
+
+# 5. Если все проверки пройдены, запускаем основной скрипт
 echo "Крышка открыта, экран активен. Запускаю скрипт яркости..."
 python3 get-nice-brightness.py

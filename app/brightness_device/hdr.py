@@ -1,5 +1,7 @@
 import json
 import os
+
+from state_dir import get_state_file
 from .base import BrightnessDevice
 
 class HdrBrightnessDevice(BrightnessDevice):
@@ -27,12 +29,7 @@ class HdrBrightnessDevice(BrightnessDevice):
 
 def remember_hdr_value(hdr_value: float) -> None:
     """Сохраняет только текущее HDR значение, перезаписывая файл (энергоэффективно)"""
-    config_file = os.path.join("config", "hdr")
-    config_dir = "config"
-    
-    # Создаём директорию только если её нет
-    if not os.path.exists(config_dir):
-        os.makedirs(config_dir, exist_ok=True)
+    config_file = get_state_file("hdr")
     
     # Пишем напрямую, без чтения предыдущих значений
     try:
@@ -44,7 +41,7 @@ def remember_hdr_value(hdr_value: float) -> None:
 
 def restore_hdr_value(default_value: float) -> float:
     """Восстанавливает последнее сохранённое HDR значение"""
-    config_file = os.path.join("config", "hdr")
+    config_file = get_state_file("hdr")
     
     if not os.path.exists(config_file):
         return default_value

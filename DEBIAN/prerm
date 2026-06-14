@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+if [[ "$1" =~ ^(remove|upgrade|deconfigure)$ ]]; then
+    for service in day-brightness.timer day-brightness.service; do
+        systemctl stop "$service" 2>/dev/null || true
+        systemctl disable "$service" 2>/dev/null || true
+    done
+fi
+#DEBHELPER#

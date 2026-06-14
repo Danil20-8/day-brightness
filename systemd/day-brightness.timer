@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Day Brightness every minute
+Requires=day-brightness.service
+
+[Timer]
+OnCalendar=*:0/1
+Persistent=true
+
+[Install]
+WantedBy=timers.target
